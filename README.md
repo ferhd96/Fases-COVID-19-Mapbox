@@ -5,4 +5,5 @@ Se ha diferenciado entre las zonas de fase 0 y las zonas de fase 1. Siendo las z
 - Geolocalizador 
 - Geocodificador
 - Leyenda
+- Pantalla completa 
 - Función de añadir un círculo de 1 km cada que se clike dentro del mapa 
