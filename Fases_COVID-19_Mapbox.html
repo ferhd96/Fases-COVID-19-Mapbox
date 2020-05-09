@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Fases ESP COVID-19</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.mapbox.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/css/font-awesome.min.css' rel='stylesheet' />
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+<style>
+.legend label{
+float: right;
+font-size:11px;
+font-family:verdana;
+text-align-last: center;
+}
+
+.legend span {
+  display:block;
+  float: left;
+  height:15px;
+  width:15%;
+  text-align:center;
+  color:#808080;
+  }
+.map-legends.wax-legends {
+  background: rgba(255,255,255,.5);
+  } 
+</style>
+
+<!-- Leyenda -->
+<div id='legend' style='display:none;'>
+  <h2>Leyenda por fases COVID-19</h2>
+  <nav class='legend clearfix'>
+    <span style="background: #c81919"></span> <label>Fase 0 - Mas de 5000 hab</label><br>
+    <span style='background:#d8bd0e'></span>  <label>Fase 0 - Mas de 5000 hab</label><br>
+  <span style="background: #2db620"></span> <label>Zonas fase 1</label><br>
+</div>
+
+
+<div id='map'></div>
+
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoiZmVyaGR2IiwiYSI6ImNqc20zZGFrMjM1Yzg0NG1sZ2lpanlocGQifQ.bFnXKGz1ZDQ63RvXLC5vtw';
+  var map = L.mapbox.map('map')
+    .setView([40.39918, -3.697400], 7)
+    .addLayer(L.mapbox.styleLayer('mapbox://styles/ferhdv/ck7tchtxk2wbn1iqree7mwq4o/draft'))
+    .addControl(L.mapbox.geocoderControl('mapbox.places', {
+        keepOpen: false,
+        position: 'topright',
+        }));
+
+//Función de pantalla completa 
+L.control.fullscreen().addTo(map);
+
+//Escala
+L.control.scale().addTo(map);
+
+//Localizador
+L.control.locate().addTo(map);
+
+//añadir leyenda en el mapa
+map.legendControl.addLegend(document.getElementById('legend').innerHTML);
+
+
+//Funcion de crear un ciruclo 
+var clickCircle;
+
+  function onMapClick(e) {
+    if (clickCircle != undefined) {
+      map.removeLayer(clickCircle);
+    };
+    clickCircle = L.circle(e.latlng, 1000, {
+      color: '#121310',
+      fillOpacity: 0,
+      opacity: 0.5
+    }).addTo(map);
+  }
+
+  map.on('click', onMapClick);
+
+
+</script>
+</body>
+</html>
